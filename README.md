@@ -24,6 +24,21 @@ If you want to use this input widget in an ActiveForm, it can be done like this:
 <?= $form->field($model, 'attributeName')->widget(alexantr\datetimepicker\DateTimePicker::className()) ?>
 ```
 
+Configuring the [flatpickr options](https://chmln.github.io/flatpickr/options/) should be done
+using the `clientOptions` attribute:
+
+```php
+<?= alexantr\datetimepicker\DateTimePicker::widget([
+    'name' => 'attributeName',
+    'clientOptions' => [
+        'allowInput' => false,
+        'enableTime' => false,
+        'enableSeconds' => false,
+        'dateFormat' => 'Y-m-d',
+    ],
+]) ?>
+```
+
 By default widget uses flatpickr's options:
 
 ```php

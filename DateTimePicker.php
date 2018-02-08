@@ -10,17 +10,20 @@ use yii\web\View;
 use yii\widgets\InputWidget;
 
 /**
- * DateTime picker input widget base on flatpickr
+ * DateTimePicker input widget uses flatpickr
  * @link https://chmln.github.io/flatpickr/
  */
 class DateTimePicker extends InputWidget
 {
-    const CDN_BASE_URL = 'https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.4/';
+    /**
+     * @var string flatpickr CDN base URL
+     */
+    public static $cdnBaseUrl = 'https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.4/';
 
     /**
      * @inheritdoc
      */
-    public $options = ['class' => 'form-control flatpickr-input'];
+    public $options = ['class' => 'form-control datetimepicker-input'];
     /**
      * @var string flatpickr's theme.
      * @see $allowedThemes for possible variants.
@@ -41,10 +44,6 @@ class DateTimePicker extends InputWidget
      */
     public $plugins = [];
     /**
-     * @var bool register css for old IE.
-     */
-    public $ieSupport = false;
-    /**
      * @var string the locale to use.
      */
     public $locale;
@@ -54,9 +53,14 @@ class DateTimePicker extends InputWidget
      */
     public $clientOptions = [];
     /**
+     * @var bool register css for old IE.
+     */
+    public $ieSupport = false;
+
+    /**
      * @var array the default options for the plugin. Will be merged with clientOptions.
      */
-    public $defaultClientOptions = [
+    protected $defaultClientOptions = [
         'allowInput' => true,
         'dateFormat' => 'Y-m-d H:i:S',
         'enableTime' => true,
@@ -64,7 +68,6 @@ class DateTimePicker extends InputWidget
         'minuteIncrement' => 1,
         'time_24hr' => true,
     ];
-
     /**
      * @var array list of theme names
      */
@@ -135,13 +138,12 @@ class DateTimePicker extends InputWidget
     protected function registerClientScript()
     {
         $view = $this->getView();
-
         $this->registerAssets();
 
         $id = $this->options['id'];
         $encodedOptions = !empty($this->clientOptions) ? Json::htmlEncode($this->clientOptions) : '{}';
 
-        $view->registerJs("alexantr.dateTimePickerWidget.register('$id', $encodedOptions)", View::POS_END);
+        $view->registerJs("alexantr.dateTimePickerWidget.init('$id', $encodedOptions)", View::POS_END);
     }
 
     /**
@@ -151,34 +153,34 @@ class DateTimePicker extends InputWidget
     {
         $view = $this->getView();
 
-        $view->registerCssFile(self::CDN_BASE_URL . 'flatpickr.min.css');
-        $view->registerJsFile(self::CDN_BASE_URL . 'flatpickr.min.js');
+        $view->registerCssFile(self::$cdnBaseUrl . 'flatpickr.min.css');
+        $view->registerJsFile(self::$cdnBaseUrl . 'flatpickr.min.js');
 
         if (!empty($this->theme) && in_array($this->theme, $this->allowedThemes)) {
-            $view->registerCssFile(self::CDN_BASE_URL . 'themes/' . $this->theme . '.css');
+            $view->registerCssFile(self::$cdnBaseUrl . 'themes/' . $this->theme . '.css');
         }
 
         if ($this->ieSupport) {
-            $view->registerCssFile(self::CDN_BASE_URL . 'ie.css');
+            $view->registerCssFile(self::$cdnBaseUrl . 'ie.css');
         }
 
         foreach ($this->plugins as $plugin) {
             if (isset($this->allowedPlugins[$plugin]['css'])) {
                 foreach ($this->allowedPlugins[$plugin]['css'] as $css) {
-                    $view->registerCssFile(self::CDN_BASE_URL . $css);
+                    $view->registerCssFile(self::$cdnBaseUrl . $css);
                 }
             }
             if (isset($this->allowedPlugins[$plugin]['js'])) {
                 foreach ($this->allowedPlugins[$plugin]['js'] as $js) {
-                    $view->registerJsFile(self::CDN_BASE_URL . $js);
+                    $view->registerJsFile(self::$cdnBaseUrl . $js);
                 }
             }
         }
 
         if (!empty($this->locale)) {
-            $view->registerJsFile(self::CDN_BASE_URL . 'l10n/' . $this->locale . '.js');
+            $view->registerJsFile(self::$cdnBaseUrl . 'l10n/' . $this->locale . '.js');
         }
 
-        DateTimePickerWidgetAsset::register($view);
+        WidgetAsset::register($view);
     }
 }

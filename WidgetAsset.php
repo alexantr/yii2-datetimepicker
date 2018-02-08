@@ -4,7 +4,7 @@ namespace alexantr\datetimepicker;
 
 use yii\web\AssetBundle;
 
-class DateTimePickerWidgetAsset extends AssetBundle
+class WidgetAsset extends AssetBundle
 {
     public $sourcePath = '@alexantr/datetimepicker/assets';
     public $js = [
