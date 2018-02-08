@@ -1,0 +1,30 @@
+{
+  "name": "alexantr/yii2-datetimepicker",
+  "description": "Datetime picker input widget for Yii 2",
+  "keywords": ["yii2", "widget", "datetimepicker", "datetime-picker", "flatpickr"],
+  "type": "yii2-extension",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alex Yashkin",
+      "email": "alex@yashkin.by"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/alexantr/yii2-datetimepicker/issues",
+    "source": "https://github.com/alexantr/yii2-datetimepicker"
+  },
+  "require": {
+    "yiisoft/yii2": "~2.0.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "alexantr\\datetimepicker\\": ""
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}
