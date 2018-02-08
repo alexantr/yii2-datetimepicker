@@ -8,6 +8,6 @@ class DateTimePickerWidgetAsset extends AssetBundle
 {
     public $sourcePath = '@alexantr/datetimepicker/assets';
     public $js = [
-        'datetimepicker.widget.js',
+        'widget.js',
     ];
 }
