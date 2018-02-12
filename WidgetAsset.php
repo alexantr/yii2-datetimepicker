@@ -10,4 +10,7 @@ class WidgetAsset extends AssetBundle
     public $js = [
         'widget.js',
     ];
+    public $depends = [
+        'alexantr\datetimepicker\FlatpickrAsset',
+    ];
 }

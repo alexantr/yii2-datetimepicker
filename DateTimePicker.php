@@ -16,17 +16,11 @@ use yii\widgets\InputWidget;
 class DateTimePicker extends InputWidget
 {
     /**
-     * @var string flatpickr CDN base URL
-     */
-    public static $cdnBaseUrl = 'https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.4/';
-
-    /**
      * @inheritdoc
      */
     public $options = ['class' => 'form-control datetimepicker-input'];
     /**
      * @var string flatpickr's theme.
-     * @see $allowedThemes for possible variants.
      */
     public $theme;
     /**
@@ -67,19 +61,6 @@ class DateTimePicker extends InputWidget
         'enableSeconds' => true,
         'minuteIncrement' => 1,
         'time_24hr' => true,
-    ];
-    /**
-     * @var array list of theme names
-     */
-    protected $allowedThemes = [
-        'airbnb',
-        'confetti',
-        'dark',
-        'light',
-        'material_blue',
-        'material_green',
-        'material_orange',
-        'material_red',
     ];
     /**
      * @var array list of plugins with css & js URLs
@@ -152,33 +133,32 @@ class DateTimePicker extends InputWidget
     protected function registerAssets()
     {
         $view = $this->getView();
+        $bundle = FlatpickrAsset::register($view);
+        WidgetAsset::register($view);
 
-        $view->registerCssFile(self::$cdnBaseUrl . 'flatpickr.min.css');
-        $view->registerJsFile(self::$cdnBaseUrl . 'flatpickr.min.js');
-
-        if (!empty($this->theme) && in_array($this->theme, $this->allowedThemes)) {
-            $view->registerCssFile(self::$cdnBaseUrl . 'themes/' . $this->theme . '.css');
+        if (!empty($this->theme) && is_file($bundle->basePath . '/themes/' . $this->theme . '.css')) {
+            $view->registerCssFile($bundle->baseUrl . '/themes/' . $this->theme . '.css');
         }
 
         if ($this->ieSupport) {
-            $view->registerCssFile(self::$cdnBaseUrl . 'ie.css');
+            $view->registerCssFile($bundle->baseUrl . '/ie.css');
         }
 
         foreach ($this->plugins as $plugin) {
             if (isset($this->allowedPlugins[$plugin]['css'])) {
                 foreach ($this->allowedPlugins[$plugin]['css'] as $css) {
-                    $view->registerCssFile(self::$cdnBaseUrl . $css);
+                    $view->registerCssFile($bundle->baseUrl . '/' . $css);
                 }
             }
             if (isset($this->allowedPlugins[$plugin]['js'])) {
                 foreach ($this->allowedPlugins[$plugin]['js'] as $js) {
-                    $view->registerJsFile(self::$cdnBaseUrl . $js);
+                    $view->registerJsFile($bundle->baseUrl . '/' . $js);
                 }
             }
         }
 
-        if (!empty($this->locale)) {
-            $view->registerJsFile(self::$cdnBaseUrl . 'l10n/' . $this->locale . '.js');
+        if (!empty($this->locale) && is_file($bundle->basePath . '/l10n/' . $this->locale . '.js')) {
+            $view->registerJsFile($bundle->baseUrl . '/l10n/' . $this->locale . '.js');
         }
 
         WidgetAsset::register($view);
