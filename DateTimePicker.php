@@ -136,29 +136,31 @@ class DateTimePicker extends InputWidget
         $bundle = FlatpickrAsset::register($view);
         WidgetAsset::register($view);
 
+        $depends = ['depends' => ['alexantr\datetimepicker\FlatpickrAsset']];
+
         if (!empty($this->theme) && is_file($bundle->basePath . '/themes/' . $this->theme . '.css')) {
-            $view->registerCssFile($bundle->baseUrl . '/themes/' . $this->theme . '.css');
+            $view->registerCssFile($bundle->baseUrl . '/themes/' . $this->theme . '.css', $depends);
         }
 
         if ($this->ieSupport) {
-            $view->registerCssFile($bundle->baseUrl . '/ie.css');
+            $view->registerCssFile($bundle->baseUrl . '/ie.css', $depends);
         }
 
         foreach ($this->plugins as $plugin) {
             if (isset($this->allowedPlugins[$plugin]['css'])) {
                 foreach ($this->allowedPlugins[$plugin]['css'] as $css) {
-                    $view->registerCssFile($bundle->baseUrl . '/' . $css);
+                    $view->registerCssFile($bundle->baseUrl . '/' . $css, $depends);
                 }
             }
             if (isset($this->allowedPlugins[$plugin]['js'])) {
                 foreach ($this->allowedPlugins[$plugin]['js'] as $js) {
-                    $view->registerJsFile($bundle->baseUrl . '/' . $js);
+                    $view->registerJsFile($bundle->baseUrl . '/' . $js, $depends);
                 }
             }
         }
 
         if (!empty($this->locale) && is_file($bundle->basePath . '/l10n/' . $this->locale . '.js')) {
-            $view->registerJsFile($bundle->baseUrl . '/l10n/' . $this->locale . '.js');
+            $view->registerJsFile($bundle->baseUrl . '/l10n/' . $this->locale . '.js', $depends);
         }
 
         WidgetAsset::register($view);
