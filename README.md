@@ -2,6 +2,10 @@
 
 This extension renders an input with [flatpickr](https://chmln.github.io/flatpickr/).
 
+[![Latest Stable Version](https://img.shields.io/packagist/v/alexantr/yii2-datetimepicker.svg)](https://packagist.org/packages/alexantr/yii2-datetimepicker)
+[![Total Downloads](https://img.shields.io/packagist/dt/alexantr/yii2-datetimepicker.svg)](https://packagist.org/packages/alexantr/yii2-datetimepicker)
+[![License](https://img.shields.io/github/license/alexantr/yii2-datetimepicker.svg)](https://raw.githubusercontent.com/alexantr/yii2-datetimepicker/master/LICENSE)
+
 ## Installation
 
 Install extension through [composer](http://getcomposer.org/):
