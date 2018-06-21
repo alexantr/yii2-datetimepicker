@@ -18,7 +18,7 @@ class DateTimePicker extends InputWidget
     /**
      * @inheritdoc
      */
-    public $options = ['class' => 'form-control datetimepicker-input'];
+    public $options = ['class' => 'form-control datetimepicker-input', 'autocomplete' => 'off'];
     /**
      * @var string flatpickr's theme.
      */
